@@ -87,8 +87,8 @@ else
 fi
 
 #download dependent binaries
-sudo wget "https://sealer.oss-cn-beijing.aliyuncs.com/auto-build/${cri}.tar.gz" && sudo tar -zxf "${cri}.tar.gz"
-sudo wget "https://sealer.oss-cn-beijing.aliyuncs.com/auto-build/bin-context.tar.gz" && sudo tar -zxf "bin-context.tar.gz"
+sudo wget -q "https://sealer.oss-cn-beijing.aliyuncs.com/auto-build/${cri}.tar.gz" && sudo tar -zxf "${cri}.tar.gz"
+sudo wget -q "https://sealer.oss-cn-beijing.aliyuncs.com/auto-build/bin-context.tar.gz" && sudo tar -zxf "bin-context.tar.gz"
 #amd64
 sudo mkdir -p "./${cri}/amd64/bin/" && sudo mkdir -p "./${cri}/arm64/bin/"
 sudo curl -L "https://dl.k8s.io/release/${version}/bin/linux/amd64/kubectl" -o "./${cri}/amd64/bin/kubectl"
@@ -100,7 +100,7 @@ sudo curl -L "https://dl.k8s.io/release/${version}/bin/linux/arm64/kubelet" -o "
 sudo curl -L "https://dl.k8s.io/release/${version}/bin/linux/arm64/kubeadm" -o "./${cri}/arm64/bin/kubeadm"
 sudo cp -r "${cri}"/* .
 sudo chmod +x amd64/bin/kube* && sudo chmod +x arm64/bin/kube*
-sudo wget "https://sealer.oss-cn-beijing.aliyuncs.com/sealers/sealer-v0.8.5-linux-${ARCH}.tar.gz" && sudo tar -xvf "sealer-v0.8.5-linux-${ARCH}.tar.gz"
+sudo wget -q "https://sealer.oss-cn-beijing.aliyuncs.com/sealers/sealer-v0.8.5-linux-${ARCH}.tar.gz" && sudo tar -xvf "sealer-v0.8.5-linux-${ARCH}.tar.gz"
 sudo sed -i "s/v1.19.8/$version/g" rootfs/etc/kubeadm.yml ##change version
 if [[ "$cri" = "containerd" ]]; then sudo sed -i "s/\/var\/run\/dockershim.sock/\/run\/containerd\/containerd.sock/g" rootfs/etc/kubeadm.yml; fi
 sudo sed -i "s/kubeadm.k8s.io\/v1beta2/$kubeadmApiVersion/g" rootfs/etc/kubeadm.yml
