@@ -18,7 +18,7 @@ jobs:
           commentbody="${{github.event.comment.body}}"
           commentbody=$(echo $commentbody | sed "s/\/imageBuild//g")
           sudo git clone https://github.com/sealerio/basefs.git
-          cd basefs && sudo touch tmp.log && sudo bash auto-build.sh --username="${{secrets.REGISTRY_USERNAME}}" --password="${{secrets.REGISTRY_PASSWORD}}" $commentbody > tmp.log && cat tmp.log
+          cd basefs && sudo touch tmp.log && sudo chmod 666 tmp.log && sudo bash auto-build.sh --username="${{secrets.REGISTRY_USERNAME}}" --password="${{secrets.REGISTRY_PASSWORD}}" $commentbody > tmp.log && cat tmp.log
           echo "::set-output name=info::$(grep 'cri:' tmp.log))"
 
       - name: Success Commit
